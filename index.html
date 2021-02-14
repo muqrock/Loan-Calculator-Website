@@ -1,0 +1,143 @@
+<html>
+<head>
+<title>Loan Calculator</title>
+
+<style>
+td {
+  background-color: #F0F8FF;
+  }
+
+th {
+  background-color: #F5F5DC;
+  }
+  
+table {
+  border-collapse: collapse;
+  width: 400px;
+  height: 150px;
+  }
+  
+#box {
+  text-align: right;
+  }
+  
+.button {
+  background-color: #696969; 
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 4px 2px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.button1:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  background-color: blue; 
+}
+
+.button2:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  background-color: #A52A2A; 
+}
+
+</style>
+</head>
+
+
+<body>
+<center>
+<form name="loandata">
+<br>
+  <table>
+    <tr><th colspan="3"><b>Enter Loan Information:</b></th></tr>
+    <tr>
+
+      <td>Enter amount of the loan (RM):</td>
+      <td id="box"><input type="text" name="principal" size="12" 
+                 onchange="calculator();" required></td>
+    </tr>
+    <tr>
+
+      <td>Interest rate (%):</td>
+      <td id="box"><input type="text" name="interest" size="12" 
+                 onchange="calculator();" required></td>
+    </tr>
+	
+    <tr>
+      <td>Payment period (Month)</td>
+      <td id="box"><input type="text" name="years" size="12" 
+                 onchange="calculator();" required></td>
+    </tr>
+	
+    <tr><td colspan="3">
+      <input type="button" class="button button1" value="Calculate" onclick="calculator();">
+	  </input><input type="reset" class="button button2"></input>
+    </td>
+	</tr>
+
+    <tr><td colspan="3">
+  </table>
+<br>
+  <table>	
+      <tr><th colspan="3"><b>Payment Information:</b></th></tr>
+    </td></tr>
+    <tr>
+
+      <td>Your monthly payment will be:</td>
+      <td id="box"><input type="text" name="payment" size="12"></td>
+    </tr>
+    <tr>
+
+      <td>Your total interest payments will be:</td>
+      <td id="box"><input type="text" name="totalinterest" size="12"></td>
+    </tr>
+    <tr>
+
+      <td>Your total payment will be:</td>
+      <td id="box"><input type="text" name="total" size="12"></td>
+    </tr>
+  </table>
+</form>
+<center>
+<script language="JavaScript">
+function calculator() {
+
+    var principal = document.loandata.principal.value;
+
+    var interest = document.loandata.interest.value / 100 / 12;
+    var payments = document.loandata.years.value;
+
+    var x = Math.pow(1 + interest, payments);
+    var monthly = (principal*x*interest)/(x-1);
+
+    if (!isNaN(monthly) && 
+        (monthly != Number.POSITIVE_INFINITY) &&
+        (monthly != Number.NEGATIVE_INFINITY)) {
+
+        document.loandata.payment.value = round(monthly);
+        document.loandata.total.value = round(monthly * payments);
+        document.loandata.totalinterest.value = 
+            round((monthly * payments) - principal);
+					
+    }
+	
+	
+    else {
+	if (principal == "" || principal == null) {
+    alert("Please fill the value correctly");	
+     }
+}
+}
+
+function round(x) {
+  return Math.round(x*100)/100;
+}
+</script>
+</body>
+</html>
